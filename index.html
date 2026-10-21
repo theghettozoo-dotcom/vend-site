@@ -53,29 +53,14 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(246,241,23
 #hero{min-height:100vh;min-height:100svh;background:radial-gradient(ellipse at 50% 40%,#2a211a 0%,var(--dark) 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:84px 20px 40px;position:relative;overflow:hidden}
 #hero .glow{position:absolute;width:70vmin;height:70vmin;border-radius:50%;background:radial-gradient(circle,rgba(255,90,31,.35),transparent 65%);opacity:0;transition:opacity 1.6s ease}
 .on #hero .glow{opacity:1}
-.machine{position:relative;width:min(340px,78vw);aspect-ratio:340/560;max-height:calc(100svh - 190px);background:linear-gradient(180deg,#2b2520,#1d1915);border-radius:22px;padding:4.5%;box-shadow:0 30px 80px rgba(0,0,0,.6),inset 0 0 0 2px #3a322b;transition:background 1s ease,box-shadow 1s ease;display:flex;flex-direction:column;gap:3%}
-.on .machine{background:linear-gradient(180deg,var(--or2),var(--or) 55%,#e94a12);box-shadow:0 30px 90px rgba(255,90,31,.35),inset 0 0 0 2px #ff9a66}
-.marquee{height:11%;border-radius:12px;background:#0f0d0b;display:flex;align-items:center;justify-content:center;gap:8px;color:#3b342d;font-weight:900;letter-spacing:.12em;font-size:clamp(14px,4.4vw,20px);transition:color .4s,text-shadow .4s}
-.marquee img{width:22px;height:22px;border-radius:5px;filter:grayscale(1) brightness(.35);transition:filter .6s}
-.on .marquee{color:#fff;text-shadow:0 0 12px rgba(255,160,110,.9)}
-.on .marquee img{filter:none}
-.glass{flex:1;border-radius:12px;background:#0c0a09;padding:5%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:5%;position:relative;overflow:hidden;box-shadow:inset 0 0 0 2px #000}
-.glass:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.12) 0 18%,transparent 30% 60%,rgba(255,255,255,.05) 70%);pointer-events:none}
-.slot{position:relative;border-radius:8px;background:#151210;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:background .5s,box-shadow .3s}
-.slot img{width:88%;height:78%;object-fit:contain;filter:brightness(.12) saturate(0);transition:filter .7s ease}
-.slot b{position:absolute;bottom:2px;left:0;right:0;text-align:center;font:700 9px/1 ui-monospace,monospace;color:#3a332c;letter-spacing:.06em}
-.on .slot{background:#f8f2e6}
-.on .slot img{filter:none}
-.on .slot b{color:#8a7f70}
-.slot.lit{box-shadow:0 0 0 2px #fff,0 0 18px 4px rgba(255,220,180,.95)}
-.panel{height:14%;display:flex;gap:4%}
-.keypad{flex:1;border-radius:10px;background:#0f0d0b;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:6px}
-.keypad i{border-radius:4px;background:#2a241f;font-style:normal;font:700 9px ui-monospace,monospace;color:#4a4038;display:flex;align-items:center;justify-content:center;transition:all .3s}
-.on .keypad i{background:#3a312a;color:#ffd7bf}
-.keypad i.lit{background:#fff;color:var(--or)}
-.screen{flex:1.2;border-radius:10px;background:#0a0908;font:700 clamp(10px,2.8vw,13px)/1.3 ui-monospace,monospace;color:#2c2622;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px;transition:color .4s}
-.on .screen{color:#7dffb0;text-shadow:0 0 8px rgba(125,255,176,.6)}
-.tray{height:8%;border-radius:10px;background:#0a0908;box-shadow:inset 0 6px 12px rgba(0,0,0,.8)}
+.machine{position:relative;height:min(calc(100svh - 190px),calc(80vw * 1966 / 1016),900px);aspect-ratio:1016/1966;filter:drop-shadow(0 30px 60px rgba(0,0,0,.65))}
+.machine>img{display:block;width:100%;height:100%;object-fit:contain;filter:brightness(.16) saturate(.35);transition:filter .12s linear}
+.on .machine>img{filter:brightness(1.04) saturate(1.05);transition:filter .9s ease}
+.on .machine{filter:drop-shadow(0 0 40px rgba(255,90,31,.45)) drop-shadow(0 30px 60px rgba(0,0,0,.6))}
+.hl{position:absolute;border-radius:6px;box-shadow:inset 0 0 0 0 rgba(255,236,210,0);background:transparent;transition:box-shadow .3s ease,background .3s ease}
+.hl.lit{background:radial-gradient(ellipse at 50% 55%,rgba(255,236,205,.28),rgba(255,180,120,.08) 70%);box-shadow:inset 0 0 0 2px rgba(255,244,228,.95),0 0 22px 4px rgba(255,190,130,.75)}
+.hl[data-tip]:hover:after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;background:rgba(20,18,16,.92);color:#fff;font:600 12px/1.2 system-ui,sans-serif;padding:6px 9px;border-radius:8px;pointer-events:none;z-index:3}
+body:not(.on) .hl{pointer-events:none}
 .heroline{margin-top:26px;text-align:center}
 .heroline h1{font-size:clamp(26px,5vw,44px);letter-spacing:-.03em;line-height:1.05}
 .heroline p{color:#cfc6b9;margin:8px 0 16px}
@@ -164,15 +149,7 @@ body.locked{background:#000}
 <main>
 <section id="hero">
   <div class="glow"></div>
-  <div class="machine" aria-label="$VEND vending machine">
-    <div class="marquee"><img src="assets/souvenir-logo.png" alt="">$VEND</div>
-    <div class="glass" id="glass"></div>
-    <div class="panel">
-      <div class="keypad" id="keypad"></div>
-      <div class="screen" id="screen">· · ·</div>
-    </div>
-    <div class="tray"></div>
-  </div>
+  <div class="machine" aria-label="$VEND vending machine" id="machine"><img src="assets/vend-machine.webp" width="1016" height="1966" alt="The orange $VEND vending machine" fetchpriority="high"></div>
   <div class="heroline">
     <h1 class="rv">The non-stop Souvenir vending machine</h1>
     <p class="rv d1">9 epic prizes · Non-stop raffles · Paired with BTC</p>
@@ -291,8 +268,12 @@ const esc = s => String(s ?? "").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;","
 const short = a => a && a.length > 12 ? a.slice(0,4)+"…"+a.slice(-4) : (a||"—");
 
 // build machine + collection
-$("#glass").innerHTML = PRIZE_SLOTS.map(p=>`<div class="slot" data-slot="${p.slot}"><img src="${p.img}" alt=""><b>${p.slot}</b></div>`).join("");
-$("#keypad").innerHTML = ["A","1","2","3","4","5","6","7","8","9","↵","✓"].slice(0,12).map(k=>`<i>${k}</i>`).join("");
+// overlay highlight boxes aligned to the real machine's 3x3 glass grid (percent of image)
+const GX=[14.76,38.39,62.2,86.0], GY=[12.72,29.3,45.88,62.67];
+// the machine art shows the Mega Evolution ETB in the 4th cell and the $25 pack in the 5th
+const PICTURED=[0,1,2,4,3,5,6,7,8];
+$("#machine").insertAdjacentHTML("beforeend", PICTURED.map((k,i)=>{const p=PRIZE_SLOTS[k],c=i%3,r=(i/3|0);
+  return `<div class="hl" data-slot="${p.slot}" data-tip="${esc(p.name)}" style="left:${GX[c]+.6}%;top:${GY[r]+.5}%;width:${GX[c+1]-GX[c]-1.2}%;height:${GY[r+1]-GY[r]-1}%"></div>`;}).join(""));
 function renderItems(state={}){
   $("#items").innerHTML = PRIZE_SLOTS.map(p=>{
     const tag = state.won?.has(p.slot) ? '<span class="tag won">Won</span>' : state.next===p.slot ? '<span class="tag next">Next draw</span>' : '<span class="tag">In machine</span>';
@@ -314,16 +295,14 @@ function toMachine(){
   setTimeout(reveal, 4200);
 }
 function powerOn(){
-  const slots=[...document.querySelectorAll(".slot")], keys=[...document.querySelectorAll(".keypad i")], scr=$("#screen");
+  const slots=[...document.querySelectorAll(".hl")];
   // flicker on
   let f=0; const fl=setInterval(()=>{ body.classList.toggle("on"); if(++f>=5){clearInterval(fl); body.classList.add("on"); cycle();} },110);
   function cycle(){
-    scr.textContent="HELLO · SELECT";
     let i=0;
     setInterval(()=>{
-      slots.forEach(s=>s.classList.remove("lit")); keys.forEach(k=>k.classList.remove("lit"));
-      const n=i%9; slots[n].classList.add("lit"); keys[n+1]?.classList.add("lit");
-      scr.textContent = PRIZE_SLOTS[n].slot + " · " + usd(PRIZE_SLOTS[n].value);
+      slots.forEach(s=>s.classList.remove("lit"));
+      slots[i%9].classList.add("lit");
       i++;
     },420);
   }
