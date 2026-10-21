@@ -7,6 +7,8 @@
 <meta name="description" content="$VEND is a 9-item Souvenir coin. Trading fees fill the pot, one holder wins each prize in a public drand draw.">
 <link rel="icon" href="assets/vend-logo.jpg">
 <meta property="og:image" content="assets/intro-poster.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
 <style>
 /* ===== CONFIG lives in the <script> at the bottom (VEND_CA, PRIZE_SLOTS) ===== */
 :root{--bg:#f6f1e7;--ink:#141210;--mute:#6f685e;--line:#e3dccd;--card:#fffdf8;--or:#ff5a1f;--or2:#ff7a3d;--dark:#15120f}
@@ -61,6 +63,10 @@ header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(246,241,23
 .hl.lit{background:radial-gradient(ellipse at 50% 55%,rgba(255,236,205,.28),rgba(255,180,120,.08) 70%);box-shadow:inset 0 0 0 2px rgba(255,244,228,.95),0 0 22px 4px rgba(255,190,130,.75)}
 .hl[data-tip]:hover:after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);white-space:nowrap;background:rgba(20,18,16,.92);color:#fff;font:600 12px/1.2 system-ui,sans-serif;padding:6px 9px;border-radius:8px;pointer-events:none;z-index:3}
 body:not(.on) .hl{pointer-events:none}
+.hl{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.item{scroll-margin-top:84px}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,90,31,0)}35%{box-shadow:0 0 0 4px var(--or),0 0 34px 8px rgba(255,90,31,.6)}}
+.item.flash{animation:pulse 1.5s ease}
 .heroline{margin-top:26px;text-align:center}
 .heroline h1{font-size:clamp(26px,5vw,44px);letter-spacing:-.03em;line-height:1.05}
 .heroline p{color:#cfc6b9;margin:8px 0 16px}
@@ -122,12 +128,35 @@ td a{color:var(--or);font-weight:650}
 .cta .btn{border-color:#fff}.cta .btn.pri{background:#fff;color:var(--ink)}.cta .btn.ghost{color:#fff}
 .cta .btn.soon small{background:#fff;color:var(--ink)}
 .ca{margin-top:18px;font:13px ui-monospace,monospace;color:#9e9486}
-footer{background:var(--dark);color:#8d8377;font-size:13px;padding:28px 0 40px;border-top:1px solid #2a241f}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer{background:var(--dark);color:#8d8377;font-size:13px;padding:28px 0 90px;border-top:1px solid #2a241f}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
 footer a{color:#d8cfc2}
 .powered{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:13px;color:var(--mute)}
 .powered img{width:22px;height:22px;border-radius:5px}
 body.locked{background:#000}
+/* ---------- display type ---------- */
+h1,h2,.card h3,#draw h3,.brand,.potbox .big{font-family:"Lilita One","Arial Black",Impact,sans-serif;font-weight:400;letter-spacing:.005em}
+h2,.heroline h1{line-height:1.08}
+h2,.card h3,#draw>.wrap>h3{color:var(--ink);text-shadow:0 2px 0 rgba(255,90,31,.28),0 0 14px rgba(255,122,61,.22)}
+.heroline h1,.cta h2,.potbox .big,.brand{-webkit-text-stroke:1px #2a140a;paint-order:stroke fill}
+.heroline h1,.cta h2{color:#fff;text-shadow:0 3px 0 #2a140a,0 0 18px rgba(255,110,40,.55)}
+.potbox .big{color:#ffb36b;text-shadow:0 0 16px rgba(255,90,31,.45)}
+.brand{font-size:22px;color:var(--or);-webkit-text-stroke:0;text-shadow:0 1px 0 #2a140a,0 0 10px rgba(255,90,31,.35)}
+.item h4{font-family:"Lilita One","Arial Black",sans-serif;font-weight:400;font-size:18px;letter-spacing:.01em}
+.item .tag,.item .code,.btn.soon small{text-transform:uppercase;letter-spacing:.08em}
+/* ---------- social logo buttons ---------- */
+.socials{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.cta .socials{justify-content:center;margin-top:18px}
+.sb{width:44px;height:44px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#221c17;border:1px solid #3a3129;color:#fff;transition:box-shadow .2s,transform .2s,border-color .2s}
+.sb svg{width:20px;height:20px;fill:currentColor}.sb img{width:24px;height:24px;border-radius:6px}
+.sb:hover{transform:translateY(-2px);border-color:var(--or);box-shadow:0 0 16px rgba(255,90,31,.55)}
+.sb.soon{opacity:.4;filter:grayscale(1);cursor:not-allowed}.sb.soon:hover{transform:none;box-shadow:none;border-color:#3a3129}
+/* ---------- music toggle ---------- */
+#music{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:60;width:46px;height:46px;border-radius:50%;border:1px solid #3a3129;background:rgba(21,18,15,.88);color:#fff;display:none;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(6px);transition:box-shadow .2s}
+#music svg{width:22px;height:22px}#music.on{box-shadow:0 0 16px rgba(255,90,31,.6);border-color:var(--or);color:#ffb36b}
+.revealed #music,body.on #music{display:inline-flex}
+#music .x{display:none}#music:not(.on) .x{display:inline}#music:not(.on) .w{display:none}
+header,header a,header .btn{text-transform:uppercase;letter-spacing:.06em}
 </style>
 <link rel="preload" as="image" href="assets/intro-poster.jpg">
 </head>
@@ -135,15 +164,15 @@ body.locked{background:#000}
 
 <div id="splash">
   <video id="intro" src="assets/intro.mp4" poster="assets/intro-poster.jpg" muted playsinline autoplay preload="auto"></video>
-  <button id="tapplay" type="button">Tap to start</button>
+  <button id="tapplay" type="button">Tap to Start</button>
   <button id="skip" type="button">Skip</button>
 </div>
 
 <header>
   <div class="wrap nav">
     <a class="brand" href="#hero"><img src="assets/vend-logo.jpg" alt="">$VEND</a>
-    <nav class="navlinks"><a href="#system">The system</a><a href="#collection">The collection</a><a href="#pot">The pot</a><a href="#draw">The draw</a></nav>
-    <a class="btn pri buy" href="https://souvenir.finance" target="_blank" rel="noopener"><img src="assets/souvenir-logo.png" alt="">Buy <span class="hide">&nbsp;on Souvenir</span></a>
+    <nav class="navlinks"><a href="#system">The System</a><a href="#collection">The Collection</a><a href="#pot">The Pot</a><a href="#draw">The Draw</a></nav>
+    <a class="btn pri buy" href="https://souvenir.finance" target="_blank" rel="noopener"><img src="assets/souvenir-logo.png" alt="">Buy<span class="hide">&nbsp;on Souvenir</span></a>
   </div>
 </header>
 
@@ -152,19 +181,19 @@ body.locked{background:#000}
   <div class="glow"></div>
   <div class="machine" aria-label="$VEND vending machine" id="machine"><img src="assets/vend-machine.webp" width="1016" height="1966" alt="The orange $VEND vending machine" fetchpriority="high"></div>
   <div class="heroline">
-    <h1 class="rv">The non-stop Souvenir vending machine</h1>
+    <h1 class="rv">The Non-Stop Souvenir Vending Machine</h1>
     <p class="rv d1">9 epic prizes · Non-stop raffles · Paired with BTC</p>
     <div class="row rv d2">
       <a class="btn pri buy" href="https://souvenir.finance" target="_blank" rel="noopener"><img src="assets/souvenir-logo.png" alt="">Buy $VEND on Souvenir</a>
-      <a class="btn ghost" href="#collection">See the prizes</a>
+      <a class="btn ghost" href="#collection">See the Prizes</a>
     </div>
   </div>
   <div class="scrollcue rv d3">Scroll</div>
 </section>
 
 <section class="s" id="about"><div class="wrap">
-  <div class="eyebrow rv">$VEND · Vending machine</div>
-  <h2 class="rv">Buy $VEND, hold &amp; win real prizes.</h2>
+  <div class="eyebrow rv">$VEND · Vending Machine</div>
+  <h2 class="rv">Buy $VEND, Hold &amp; Win Real Prizes</h2>
   <p class="lead rv d1">$VEND is a 9-item Souvenir coin paired with real assets, bought with the fees from volume and raffled to holders over and over again. Every trade feeds it. The team stakes its supply, and items won are sold in the $VEND store for buybacks and burns, a flywheel back into the main coin and the platform. The idea is simple: this is the non-stop Souvenir vending machine, the official mascot of Souvenir.</p>
   <div class="facts rv d2">
     <span class="chip">Paired with <b>BTC</b></span>
@@ -179,7 +208,7 @@ body.locked{background:#000}
 
 <section class="s" id="system"><div class="wrap">
   <div class="eyebrow">The system</div>
-  <h2>Four moves, every round.</h2>
+  <h2>Four Moves, Every Round</h2>
   <p class="lead">Trading fees fund a basket of nine real prizes. When the pot covers a prize, one holder wins it through a public draw. The team stakes its supply; items won are sold for buyback and burn.</p>
   <div class="grid g4" style="margin-top:34px">
     <div class="card"><div class="n">01</div><h3>Trade</h3><p>3% of every $VEND trade: 2.7% fills the pot, 0.3% goes to Souvenir.</p></div>
@@ -191,7 +220,7 @@ body.locked{background:#000}
 
 <section class="s" id="collection"><div class="wrap">
   <div class="eyebrow">The collection</div>
-  <h2>Nine pieces, one machine.</h2>
+  <h2>Nine Pieces, One Machine</h2>
   <p class="lead">Sealed 30th Celebration and Mega Evolution product, plus five Collector Crypt gacha packs with a graded card in each. The basket is worth about <b>$988</b>. Round 1 is the 30th Celebration Elite Trainer Box; after that, each draw also picks the next prize at random.</p>
   <div class="grid items" id="items" style="margin-top:34px"></div>
   <p class="sub" style="color:var(--mute);font-size:13px;margin-top:14px">Each pack holds one graded card, revealed when it is opened.</p>
@@ -199,24 +228,24 @@ body.locked{background:#000}
 
 <section class="s" id="pot"><div class="wrap">
   <div class="eyebrow">The pot</div>
-  <h2>Every trade fills the machine.</h2>
+  <h2>Every Trade Fills the Machine</h2>
   <p class="lead">2.7% of every $VEND trade on Souvenir drops into the pot. When the pot covers the next prize plus 10%, that slot unlocks.</p>
   <div class="potbox">
-    <div class="top"><span class="live" id="live">Live at launch</span><span class="meta" id="updated"></span></div>
+    <div class="top"><span class="live" id="live">Live at Launch</span><span class="meta" id="updated"></span></div>
     <div class="big" id="potPct">0%</div>
     <div class="bar"><i id="potBar"></i></div>
-    <div class="meta" id="potMeta">toward round 1 · 30th Celebration Elite Trainer Box · unlocks at $189.06</div>
+    <div class="meta" id="potMeta">Toward Round 1 · 30th Celebration Elite Trainer Box · unlocks at $189.06</div>
     <div class="meta" id="potSub" style="margin-top:6px">The pot starts filling with the first trade. Emptying the whole machine takes about $1,087 in pot.</div>
   </div>
 </div></section>
 
 <section class="s" id="draw"><div class="wrap">
   <div class="eyebrow">The draw</div>
-  <h2>Draws you can check yourself.</h2>
+  <h2>Draws You Can Check Yourself</h2>
   <div class="grid g3" style="margin-top:28px">
-    <div class="card"><div class="n">01</div><h3>Snapshot first</h3><p>When a slot unlocks, the holder list is posted with its fingerprint before the drawing round exists.</p></div>
-    <div class="card"><div class="n">02</div><h3>A round nobody controls</h3><p>The winner comes from a future drand round, randomness published by a network of independent operators.</p></div>
-    <div class="card"><div class="n">03</div><h3>Receipts, always</h3><p>Every winner, shipping tracking number and buyback transaction is posted so anyone can check the machine.</p></div>
+    <div class="card"><div class="n">01</div><h3>Snapshot First</h3><p>When a slot unlocks, the holder list is posted with its fingerprint before the drawing round exists.</p></div>
+    <div class="card"><div class="n">02</div><h3>A Round Nobody Controls</h3><p>The winner comes from a future drand round, randomness published by a network of independent operators.</p></div>
+    <div class="card"><div class="n">03</div><h3>Receipts, Always</h3><p>Every winner, shipping tracking number and buyback transaction is posted so anyone can check the machine.</p></div>
   </div>
   <h3 style="margin-top:44px;font-size:22px;letter-spacing:-.02em">Winners</h3>
   <div class="tw"><table><thead><tr><th>Round</th><th>Prize</th><th>Winner</th><th>Proof</th></tr></thead>
@@ -225,23 +254,36 @@ body.locked{background:#000}
 
 <section class="s cta" id="launch"><div class="wrap">
   <div class="eyebrow">Launch</div>
-  <h2>The machine opens at launch.</h2>
+  <h2>The Machine Opens at Launch</h2>
   <p class="lead">The contract address goes live everywhere at once on launch day. Until then, the machine is stocking up.</p>
   <div class="row">
     <a class="btn pri buy" href="https://souvenir.finance" target="_blank" rel="noopener"><img src="assets/souvenir-logo.png" alt="">Buy on Souvenir</a>
-    <a class="btn ghost soon" id="pumpBtn" aria-disabled="true">pump.fun <small>At launch</small></a>
-    <a class="btn ghost soon" id="dexBtn" aria-disabled="true">DEX Screener <small>At launch</small></a>
-    <a class="btn ghost" href="https://x.com/VendSouvenir" target="_blank" rel="noopener">X @VendSouvenir</a>
-    <a class="btn ghost" href="https://t.me/VendSouvenir" target="_blank" rel="noopener">Telegram</a>
+    <a class="btn ghost soon" id="pumpBtn" aria-disabled="true">pump.fun <small>At Launch</small></a>
+    <a class="btn ghost soon" id="dexBtn" aria-disabled="true">DEX Screener <small>At Launch</small></a>
   </div>
-  <div class="ca" id="caLine">CA: at launch</div>
+  <div class="socials">
+    <a class="sb" href="https://x.com/VendSouvenir" target="_blank" rel="noopener" aria-label="$VEND on X" title="X @VendSouvenir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></a>
+    <a class="sb" href="https://t.me/VendSouvenir" target="_blank" rel="noopener" aria-label="$VEND on Telegram" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+    <a class="sb buy" href="https://souvenir.finance" target="_blank" rel="noopener" aria-label="Souvenir" title="Souvenir"><img src="assets/souvenir-logo.png" alt=""></a>
+    <a class="sb soon pumpLink" aria-disabled="true" aria-label="pump.fun (at launch)" title="pump.fun · live at launch"><img src="assets/pumpfun.png" alt=""></a>
+    <a class="sb soon dexLink" aria-disabled="true" aria-label="DEX Screener (at launch)" title="DEX Screener · live at launch"><img src="assets/dexscreener.png" alt=""></a>
+  </div>
+  <div class="ca" id="caLine">CA: At launch</div>
 </div></section>
 </main>
 
 <footer><div class="wrap">
   <div>$VEND is a meme coin with no intrinsic value or expectation of financial return. Not financial advice.</div>
-  <div><a href="https://x.com/VendSouvenir" target="_blank" rel="noopener">X</a> · <a href="https://t.me/VendSouvenir" target="_blank" rel="noopener">Telegram</a> · <a href="https://souvenir.finance" target="_blank" rel="noopener">souvenir.finance</a></div>
+  <div class="socials">
+    <a class="sb" href="https://x.com/VendSouvenir" target="_blank" rel="noopener" aria-label="$VEND on X" title="X @VendSouvenir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z"/></svg></a>
+    <a class="sb" href="https://t.me/VendSouvenir" target="_blank" rel="noopener" aria-label="$VEND on Telegram" title="Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+    <a class="sb buy" href="https://souvenir.finance" target="_blank" rel="noopener" aria-label="Souvenir" title="Souvenir"><img src="assets/souvenir-logo.png" alt=""></a>
+    <a class="sb soon pumpLink" aria-disabled="true" aria-label="pump.fun (at launch)" title="pump.fun · live at launch"><img src="assets/pumpfun.png" alt=""></a>
+    <a class="sb soon dexLink" aria-disabled="true" aria-label="DEX Screener (at launch)" title="DEX Screener · live at launch"><img src="assets/dexscreener.png" alt=""></a>
+  </div>
 </div></footer>
+<audio id="theme" src="assets/theme.mp3" loop preload="none"></audio>
+<button id="music" type="button" aria-label="Toggle music" title="Music"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z" fill="currentColor"/><g class="w"><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></g><g class="x"><path d="m22 9-6 6M16 9l6 6"/></g></svg></button>
 
 <script>
 /* ================= CONFIG ================= */
@@ -254,12 +296,12 @@ const PRIZE_SLOTS = [
   {slot:"A1", id:"", name:"30th Celebration Elite Trainer Box", sub:"Sealed", value:171.87, img:"assets/items/a1.jpg"},
   {slot:"A2", id:"", name:"30th Celebration Greninja ex Box",   sub:"Sealed", value:85.88,  img:"assets/items/a2.jpg"},
   {slot:"A3", id:"", name:"30th Celebration Poster Collection", sub:"Sealed", value:60,     img:"assets/items/a3.jpg"},
-  {slot:"A4", id:"", name:"Pokémon pack | $25",  sub:"Collector Crypt gacha · one graded card", value:25.50, img:"assets/items/a4.jpg"},
+  {slot:"A4", id:"", name:"Pokémon Pack | $25",  sub:"Collector Crypt gacha · one graded card", value:25.50, img:"assets/items/a4.jpg"},
   {slot:"A5", id:"", name:"Mega Evolution Elite Trainer Box", sub:"Sealed", value:154.99, img:"assets/items/a5.jpg"},
-  {slot:"A6", id:"", name:"Pokémon pack | $50",  sub:"Collector Crypt gacha · one graded card", value:51,    img:"assets/items/a6.jpg"},
-  {slot:"A7", id:"", name:"Pokémon pack | $100", sub:"Collector Crypt gacha · one graded card", value:102,   img:"assets/items/a7.jpg"},
-  {slot:"A8", id:"", name:"Pokémon pack | $250", sub:"Collector Crypt gacha · one graded card", value:255,   img:"assets/items/a8.jpg"},
-  {slot:"A9", id:"", name:"Sealed Pokémon pack | $80", sub:"Collector Crypt gacha · one graded card", value:81.60, img:"assets/items/a9.jpg"},
+  {slot:"A6", id:"", name:"Pokémon Pack | $50",  sub:"Collector Crypt gacha · one graded card", value:51,    img:"assets/items/a6.jpg"},
+  {slot:"A7", id:"", name:"Pokémon Pack | $100", sub:"Collector Crypt gacha · one graded card", value:102,   img:"assets/items/a7.jpg"},
+  {slot:"A8", id:"", name:"Pokémon Pack | $250", sub:"Collector Crypt gacha · one graded card", value:255,   img:"assets/items/a8.jpg"},
+  {slot:"A9", id:"", name:"Sealed Pokémon Pack | $80", sub:"Collector Crypt gacha · one graded card", value:81.60, img:"assets/items/a9.jpg"},
 ];
 /* ========================================== */
 
@@ -277,18 +319,22 @@ $("#machine").insertAdjacentHTML("beforeend", PICTURED.map((k,i)=>{const p=PRIZE
   return `<div class="hl" data-slot="${p.slot}" data-tip="${esc(p.name)}" style="left:${GX[c]+.6}%;top:${GY[r]+.5}%;width:${GX[c+1]-GX[c]-1.2}%;height:${GY[r+1]-GY[r]-1}%"></div>`;}).join(""));
 function renderItems(state={}){
   $("#items").innerHTML = PRIZE_SLOTS.map(p=>{
-    const tag = state.won?.has(p.slot) ? '<span class="tag won">Won</span>' : state.next===p.slot ? '<span class="tag next">Next draw</span>' : '<span class="tag">In machine</span>';
-    return `<article class="item"><div class="ph"><span class="code">${p.slot}</span>${tag}<img class="${/a[1-9]\.jpg$/.test(p.img)?'full':''}" src="${p.img}" alt="${esc(p.name)}" loading="lazy"></div>
+    const tag = state.won?.has(p.slot) ? '<span class="tag won">Won</span>' : state.next===p.slot ? '<span class="tag next">Next Draw</span>' : '<span class="tag">In Machine</span>';
+    return `<article class="item" id="item-${p.slot}"><div class="ph"><span class="code">${p.slot}</span>${tag}<img class="${/a[1-9]\.jpg$/.test(p.img)?'full':''}" src="${p.img}" alt="${esc(p.name)}" loading="lazy"></div>
     <div class="body"><h4>${esc(p.name)}</h4><div class="sub">${esc(p.sub)}</div>
     <div class="kv"><span>Value</span><b>${usd(p.value)}</b></div><div class="kv" style="margin-top:4px"><span>Unlocks at</span><b>${usd(+(p.value*1.1).toFixed(2))}</b></div></div></article>`;}).join("");
 }
 renderItems({next:"A1"});
+document.querySelectorAll(".hl").forEach(h=>{h.setAttribute("role","button");h.tabIndex=0;h.setAttribute("aria-label","Go to "+h.dataset.tip);
+  const go=()=>{ if(typeof reveal==="function") reveal(); setTimeout(()=>{const c=document.getElementById("item-"+h.dataset.slot); if(!c) return;
+    window.scrollTo({top:c.getBoundingClientRect().top+scrollY-84,behavior:"smooth"}); c.classList.remove("flash"); setTimeout(()=>{void c.offsetWidth;c.classList.add("flash");setTimeout(()=>c.classList.remove("flash"),1600);},500);},60); };
+  h.addEventListener("click",go); h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});});
 
 // ---------- flow: video -> machine only -> site ----------
 const splash=$("#splash"), vid=$("#intro"), body=document.body;
 let stage=0;
 function toMachine(){
-  if(stage) return; stage=1;
+  if(stage) return; stage=1; armMusic();
   window.scrollTo(0,0);
   splash.classList.add("out");
   setTimeout(()=>{ splash.remove(); }, 1000);
@@ -314,8 +360,19 @@ function reveal(){
 }
 vid.addEventListener("ended", toMachine);
 vid.addEventListener("error", toMachine);
-$("#skip").onclick = toMachine;
-$("#tapplay").onclick = () => { splash.classList.remove("noauto"); vid.play().catch(toMachine); };
+$("#skip").onclick = ()=>{ wantMusic(); toMachine(); };
+// ---------- theme music ----------
+const aud=$("#theme"), mBtn=$("#music"); let fadeT, armed=false, userGesture=false;
+const muted=()=>localStorage.getItem("vendMute")==="1";
+function wantMusic(){ userGesture=true; }
+function fadeTo(v,cb){ clearInterval(fadeT); fadeT=setInterval(()=>{ const d=v-aud.volume; if(Math.abs(d)<.02){aud.volume=v;clearInterval(fadeT);cb&&cb();} else aud.volume=Math.max(0,Math.min(1,aud.volume+Math.sign(d)*.02)); },60); }
+function startMusic(){ aud.volume=0; const p=aud.play(); if(p&&p.then) p.then(()=>{mBtn.classList.add("on");fadeTo(.35);}).catch(()=>{}); }
+function stopMusic(){ mBtn.classList.remove("on"); fadeTo(0,()=>aud.pause()); }
+function armMusic(){ if(armed) return; armed=true; if(muted()) return;
+  if(userGesture) startMusic();
+  else { const go=()=>{ ["pointerdown","keydown","touchstart"].forEach(e=>removeEventListener(e,go)); if(!muted()&&aud.paused) startMusic(); }; ["pointerdown","keydown","touchstart"].forEach(e=>addEventListener(e,go,{passive:true})); } }
+mBtn.onclick=e=>{ e.stopPropagation(); if(aud.paused||!mBtn.classList.contains("on")){ localStorage.setItem("vendMute","0"); startMusic(); } else { localStorage.setItem("vendMute","1"); stopMusic(); } };
+$("#tapplay").onclick = () => { wantMusic(); splash.classList.remove("noauto"); vid.play().catch(toMachine); };
 const p = vid.play();
 if (p && p.catch) p.catch(()=>splash.classList.add("noauto"));
 setTimeout(()=>{ if(!stage && vid.paused && !splash.classList.contains("noauto")) splash.classList.add("noauto"); }, 2500);
@@ -330,6 +387,7 @@ function setLinks(){
   const pf=$("#pumpBtn"), dx=$("#dexBtn");
   pf.href=`https://pump.fun/coin/${VEND_CA}`; dx.href=`https://dexscreener.com/solana/${VEND_CA}`;
   [pf,dx].forEach(b=>{b.classList.remove("soon");b.target="_blank";b.rel="noopener";b.removeAttribute("aria-disabled");b.querySelector("small")?.remove();});
+  document.querySelectorAll(".pumpLink,.dexLink").forEach(a=>{const d=a.classList.contains("dexLink");a.href=d?`https://dexscreener.com/solana/${VEND_CA}`:`https://pump.fun/coin/${VEND_CA}`;a.classList.remove("soon");a.removeAttribute("aria-disabled");a.target="_blank";a.rel="noopener";a.title=d?"DEX Screener":"pump.fun";a.setAttribute("aria-label",a.title);});
   $("#caLine").textContent="CA: "+VEND_CA;
 }
 const slotFor = id => PRIZE_SLOTS.find(p=>p.id && String(p.id)===String(id));
@@ -347,7 +405,7 @@ async function refresh(){
     const pct = target && !isNaN(potUsd) ? Math.min(100, potUsd/target*100) : null;
     $("#potPct").textContent = pct!=null ? pct.toFixed(1)+"%" : potSol.toFixed(3)+" SOL";
     $("#potBar").style.width = (pct ?? 0) + "%";
-    $("#potMeta").textContent = `round ${coin.round ?? "—"} · ${sl ? sl.slot+" "+sl.name : (prize.name||"next prize")}${target? " · unlocks at "+usd(+target.toFixed(2)):""}`;
+    $("#potMeta").textContent = `Round ${coin.round ?? "—"} · ${sl ? sl.slot+" "+sl.name : (prize.name||"next prize")}${target? " · unlocks at "+usd(+target.toFixed(2)):""}`;
     $("#potSub").textContent = `Pot ${potSol.toFixed(3)} SOL${!isNaN(potUsd)?" ≈ "+usd(+potUsd.toFixed(2)):""}${coin.holders!=null?" · "+coin.holders+" holders":""}`;
     let won=new Set(), rows=[];
     try{
@@ -367,9 +425,9 @@ async function refresh(){
     if(rows.length) $("#winners").innerHTML = rows.join("");
     renderItems({won, next: sl?.slot});
     $("#live").textContent="Live"; $("#live").classList.add("ok");
-    $("#updated").textContent="updated "+new Date().toLocaleTimeString();
+    $("#updated").textContent="Updated "+new Date().toLocaleTimeString();
   }catch(e){
-    $("#live").textContent = String(e.message).includes("not_found") ? "Coin not listed yet" : "Souvenir offline";
+    $("#live").textContent = String(e.message).includes("not_found") ? "Coin Not Listed Yet" : "Souvenir Offline";
     $("#live").classList.remove("ok");
   }
 }
